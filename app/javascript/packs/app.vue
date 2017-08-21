@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <p>{{ message }}</p>
+    <div class="container">
+      <div class="jumbotron">
+        <p>{{ message }}</p>
+      </div>
+
+    </div>
   </div>
 </template>
 
