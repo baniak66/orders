@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <top></top>
     <div class="container">
       <div class="jumbotron">
         <p>{{ message }}</p>
@@ -10,11 +11,16 @@
 </template>
 
 <script>
+import Top from './components/top.vue'
+
 export default {
   data: function () {
     return {
       message: "Hello Vue!"
     }
+  },
+  components: {
+    Top
   }
 }
 </script>
