@@ -4,4 +4,10 @@ class SessionsController < ApplicationController
     session[:user_id] = @user.id
     redirect_to root_path
   end
+
+  def destroy
+    if current_user
+      session.delete(:user_id)
+    end
+  end
 end

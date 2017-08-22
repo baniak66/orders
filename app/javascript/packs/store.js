@@ -15,10 +15,16 @@ const store = new Vuex.Store({
       }, (err) => {
         commit('SET_USER', { user: {status: "no user"} })
       })
+    },
+    LOGOUT_USER: function ({ commit }) {
+      commit('CLEAR_USER', { user: {status: "no user"} })
     }
   },
   mutations: {
     SET_USER: (state, { user }) => {
+      state.user = user
+    },
+    CLEAR_USER: (state, { user }) => {
       state.user = user
     }
   },

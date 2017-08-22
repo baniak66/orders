@@ -8,8 +8,13 @@
         </div>
       </div>
       <div id="navbar">
-        <ul v-if="user != {}" class="nav navbar-nav navbar-right">
+        <ul v-if="user.status != 'no user'" class="nav navbar-nav navbar-right">
           <li><a href="#">{{user.name}}</a></li>
+          <li>
+            <a href="" v-on:click="logout">
+              <%= helpers.link_to 'Logout', '/logout', method: :delete %>
+            </a>
+          </li>
         </ul>
         <ul v-if="user.status == 'no user'" class="nav navbar-nav navbar-right">
           <li><%= helpers.link_to 'Facebook', '/auth/facebook' %></li>
@@ -34,6 +39,12 @@
     }),
     mounted: function () {
       this.$store.dispatch('CHECK_USER')
+    },
+    methods: {
+      logout: function (e) {
+        e.preventDefault()
+        this.$store.dispatch('LOGOUT_USER')
+      }
     }
   }
 </script>
