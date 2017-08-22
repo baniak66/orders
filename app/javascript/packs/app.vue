@@ -11,18 +11,20 @@
 </template>
 
 <script>
-import Top from './components/top.vue'
+  import store from './store'
+  import Top from './components/top.vue.erb'
 
-export default {
-  data: function () {
-    return {
-      message: "Hello Vue!"
-    }
-  },
-  components: {
-    Top
+  export default {
+    data: function () {
+      return {
+        message: "Hello Vue!"
+      }
+    },
+    components: {
+      Top
+    },
+    store
   }
-}
 </script>
 
 <style scoped>
