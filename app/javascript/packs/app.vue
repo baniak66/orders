@@ -5,7 +5,7 @@
       <div class="jumbotron">
         <p>{{ message }}</p>
       </div>
-
+      <orders></orders>
     </div>
   </div>
 </template>
@@ -13,6 +13,7 @@
 <script>
   import store from './store'
   import Top from './components/top.vue.erb'
+  import Orders from './components/orders.vue'
 
   export default {
     data: function () {
@@ -21,7 +22,7 @@
       }
     },
     components: {
-      Top
+      Top, Orders
     },
     store
   }

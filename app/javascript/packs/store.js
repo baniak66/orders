@@ -6,7 +6,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    user: {}
+    user: {},
+    orders: []
   },
   actions: {
     CHECK_USER: function ({ commit }) {
@@ -18,7 +19,14 @@ const store = new Vuex.Store({
     },
     LOGOUT_USER: function ({ commit }) {
       commit('CLEAR_USER', { user: {status: "no user"} })
-    }
+    },
+    LOAD_ORDER_LIST: ({ commit }) => {
+      axios.get('/orders').then((response) => {
+        commit('SET_ORDER_LIST', { list: response.data })
+      }, (err) => {
+        console.log(err)
+      })
+    },
   },
   mutations: {
     SET_USER: (state, { user }) => {
@@ -26,11 +34,17 @@ const store = new Vuex.Store({
     },
     CLEAR_USER: (state, { user }) => {
       state.user = user
-    }
+    },
+    SET_ORDER_LIST: (state, { list }) => {
+      state.orders = list
+    },
   },
   getters: {
     current_user: state => {
       return state.user
+    },
+    orders: state => {
+      return state.orders
     }
   }
 })
