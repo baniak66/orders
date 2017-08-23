@@ -2,9 +2,6 @@
   <div id="app">
     <top></top>
     <div class="container">
-      <div class="jumbotron">
-        <p>{{ message }}</p>
-      </div>
       <orders></orders>
     </div>
   </div>
@@ -16,11 +13,6 @@
   import Orders from './components/orders.vue'
 
   export default {
-    data: function () {
-      return {
-        message: "Hello Vue!"
-      }
-    },
     components: {
       Top, Orders
     },
@@ -28,9 +20,3 @@
   }
 </script>
 
-<style scoped>
-p {
-  font-size: 2em;
-  text-align: center;
-}
-</style>

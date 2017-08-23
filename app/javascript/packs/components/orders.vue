@@ -1,8 +1,13 @@
 <template>
-  <div class="orders container">
-    <ul>
-      <order v-for="order in orders" :order="order" :key="order.id"></order>
-    </ul>
+  <div class="orders container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Active orders</h3>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+          <order v-for="order in orders" :order="order" :key="order.id"></order>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
