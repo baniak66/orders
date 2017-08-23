@@ -1,16 +1,20 @@
 <template>
   <div class="orders container">
     <ul>
-      <li v-for="order in orders">{{order.restaurant}} {{order.user.name}}</li>
+      <order v-for="order in orders" :order="order" :key="order.id"></order>
     </ul>
   </div>
 </template>
 
 <script>
+  import Order from './order'
   import { mapGetters } from 'vuex'
 
   export default {
     name: 'orders',
+    components: {
+      Order
+    },
     computed: mapGetters([
       'orders'
     ]),
