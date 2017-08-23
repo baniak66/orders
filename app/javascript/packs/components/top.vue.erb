@@ -10,6 +10,7 @@
       <div id="navbar">
         <ul v-if="user.status != 'no user'" class="nav navbar-nav navbar-right">
           <li><a href="#">{{user.name}}</a></li>
+          <li><img :src="imgUrl"></li>
           <li>
             <a href="" v-on:click="logout">
               <%= helpers.link_to 'Logout', '/logout', method: :delete %>
@@ -34,9 +35,14 @@
 
       }
     },
-    computed: mapGetters({
-      user: 'current_user'
-    }),
+    computed: {
+      ...mapGetters({
+        user: 'current_user'
+      }),
+      imgUrl: function () {
+        return this.user.image_url
+      }
+    },
     mounted: function () {
       this.$store.dispatch('CHECK_USER')
     },
