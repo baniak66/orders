@@ -2,6 +2,10 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
+let token = document.getElementsByName('csrf-token')[0].getAttribute('content')
+axios.defaults.headers.common['X-CSRF-Token'] = token
+axios.defaults.headers.common['Accept'] = 'application/json'
+
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -27,6 +31,13 @@ const store = new Vuex.Store({
         console.log(err)
       })
     },
+    ADD_NEW_ORDER: ({ commit }, payload) => {
+      axios.post('/orders', {order: payload}).then((response) => {
+        commit('ADD_ORDER', { order: response.data })
+      }, (err) => {
+        console.log(err)
+      })
+    },
   },
   mutations: {
     SET_USER: (state, { user }) => {
@@ -37,6 +48,9 @@ const store = new Vuex.Store({
     },
     SET_ORDER_LIST: (state, { list }) => {
       state.orders = list
+    },
+    ADD_ORDER: (state, { order }) => {
+      state.orders.push(order)
     },
   },
   getters: {
