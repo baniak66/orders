@@ -6,6 +6,9 @@
 
 import Vue from 'vue'
 import App from './app.vue'
+import Notifications from 'vue-notification'
+
+Vue.use(Notifications)
 
 document.addEventListener('DOMContentLoaded', () => {
   document.body.appendChild(document.createElement('hello'))

@@ -41,7 +41,7 @@
       }
     },
     computed: mapGetters([
-      'orders'
+      'orders', 'notif'
     ]),
     mounted: function () {
       this.$store.dispatch('LOAD_ORDER_LIST')
@@ -51,6 +51,13 @@
         e.preventDefault()
         this.$store.dispatch('ADD_NEW_ORDER', {restaurant: this.newOrder.restaurant})
         this.newOrder.restaurant = ""
+      }
+    },
+    watch: {
+      'notif': function () {
+        this.$notify({
+          text: this.notif.message,
+        })
       }
     }
   }

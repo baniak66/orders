@@ -11,7 +11,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     user: {},
-    orders: []
+    orders: [],
+    notif: {}
   },
   actions: {
     CHECK_USER: function ({ commit }) {
@@ -35,7 +36,10 @@ const store = new Vuex.Store({
       axios.post('/orders', {order: payload}).then((response) => {
         commit('ADD_ORDER', { order: response.data })
       }, (err) => {
-        console.log(err)
+        commit('SET_NOTIF', { notif: {
+          message: err.response.data.error,
+          time: Date.now()}
+        })
       })
     },
   },
@@ -52,6 +56,9 @@ const store = new Vuex.Store({
     ADD_ORDER: (state, { order }) => {
       state.orders.push(order)
     },
+    SET_NOTIF: (state, { notif }) => {
+      state.notif = notif
+    },
   },
   getters: {
     current_user: state => {
@@ -59,7 +66,11 @@ const store = new Vuex.Store({
     },
     orders: state => {
       return state.orders
+    },
+    notif: state => {
+      return state.notif
     }
+
   }
 })
 export default store

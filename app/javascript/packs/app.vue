@@ -4,6 +4,7 @@
     <div class="container">
       <orders></orders>
     </div>
+    <notifications />
   </div>
 </template>
 
