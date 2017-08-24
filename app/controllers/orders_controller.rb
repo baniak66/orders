@@ -12,6 +12,8 @@ class OrdersController < ApplicationController
     @order.user_id = current_user.id
     if @order.save
       render json: @order, include: [:user]
+    else
+      render json: { "error": @order.errors.full_messages[0] }, status: 400
     end
   end
 
