@@ -1,5 +1,7 @@
 class OrdersController < ApplicationController
 
+  before_action :authenticate, only: [:create]
+
   def index
     @orders = Order.all
     render json: @orders, include: [:user]
@@ -18,4 +20,11 @@ class OrdersController < ApplicationController
   def order_params
     params.require(:order).permit(:restaurant)
   end
+
+  def authenticate
+    unless current_user
+      render json: { "error": "Please login..." }, status: 401
+    end
+  end
+
 end
