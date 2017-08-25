@@ -3,8 +3,11 @@
     <div class="panel-heading" role="tab" v-bind:id="'heading'+orderId">
       <h4 class="panel-title">
         <a role="button" data-toggle="collapse" data-parent="#accordion" v-bind:href="'#collapse'+orderId" aria-expanded="true" v-bind:aria-controls="'collapse'+orderId">
-          <h5>{{order.restaurant}} <span class="badge">{{mealNumber}}</span> <span class="label label-primary">{{order.status}}</span>
-</h5>
+          <h4>
+            {{order.restaurant}}
+            <span class="badge">{{mealNumber}}</span>
+            <span class="label label-primary">{{order.status}}</span>
+          </h4>
         </a>
       </h4>
     </div>
@@ -13,6 +16,7 @@
         <ul>
           <li v-for="meal in order.meals">{{meal.name}} - {{meal.price}}</li>
         </ul>
+        <meal-form :order="order"></meal-form>
       </div>
     <div class="panel-footer">
       <small><em>Created {{order.created_at}} by: {{order.user.name}}</em></small>
@@ -22,9 +26,14 @@
 </template>
 
 <script>
+  import MealForm from './meal-form'
+
   export default {
     name: 'order',
     props: ['order'],
+    components: {
+      MealForm
+    },
     computed: {
       orderId: function () {
         return this.order.id

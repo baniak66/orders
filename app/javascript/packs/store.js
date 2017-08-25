@@ -42,6 +42,16 @@ const store = new Vuex.Store({
         })
       })
     },
+    ADD_NEW_MEAL: ({ commit }, payload) => {
+      axios.post('/orders/'+payload.id+'/meals', {meal: payload}).then((response) => {
+        commit('ADD_MEAL', { meal: response.data })
+      }, (err) => {
+        commit('SET_NOTIF', { notif: {
+          message: err.response.data.error,
+          time: Date.now()}
+        })
+      })
+    },
   },
   mutations: {
     SET_USER: (state, { user }) => {
@@ -55,6 +65,10 @@ const store = new Vuex.Store({
     },
     ADD_ORDER: (state, { order }) => {
       state.orders.push(order)
+    },
+    ADD_MEAL: (state, { meal }) => {
+      let meals = state.orders.filter((ord) => { return ord.id == meal.order_id})
+      meals[0].meals.push(meal)
     },
     SET_NOTIF: (state, { notif }) => {
       state.notif = notif
