@@ -3,5 +3,7 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   get '/user', to: 'users#status'
-  resources :orders, only: [:index, :create]
+  resources :orders, only: [:index, :create] do
+    resources :meals, only: [:create]
+  end
 end
