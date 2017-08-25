@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
 
   def index
     @orders = Order.all
-    render json: @orders, include: [:user]
+    render json: @orders, include: [:user, :meals]
   end
 
   def create
