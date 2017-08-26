@@ -14,7 +14,8 @@
     <div v-bind:id="'collapse'+orderId" class="panel-collapse collapse" role="tabpanel" v-bind:aria-labelledby="'heading'+orderId">
       <div class="panel-body">
         <ul class="media-list">
-          <li v-for="meal in order.meals" class="media">
+          <meal v-for="meal in order.meals" :meal="meal" :key="meal.id"></meal>
+          <!-- <li v-for="meal in order.meals" class="media">
             <div class="media-left">
               <img class="media-object" v-bind:src="meal.user.image_url">
             </div>
@@ -22,7 +23,7 @@
               <h4 class="media-heading">{{meal.name}}</h4>
               price: {{meal.price}}
             </div>
-          </li>
+          </li> -->
         </ul>
         <meal-form :order="order"></meal-form>
       </div>
@@ -35,12 +36,13 @@
 
 <script>
   import MealForm from './meal-form'
+  import Meal from './meal'
 
   export default {
     name: 'order',
     props: ['order'],
     components: {
-      MealForm
+      MealForm, Meal
     },
     computed: {
       orderId: function () {
