@@ -7,7 +7,7 @@ class MealsController < ApplicationController
     @meal = @order.meals.new(meal_params)
     @meal.user_id = current_user.id
     if @meal.save
-      render json: @meal
+      render json: @meal, include: [:user]
     else
       render json: { "error": @meal.errors.full_messages.join(", ") }, status: 400
     end

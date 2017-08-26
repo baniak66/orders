@@ -4,14 +4,15 @@ class OrdersController < ApplicationController
 
   def index
     @orders = Order.all
-    render json: @orders, include: [:user, :meals]
+    render json: @orders.to_json(:include => [ :user, { :meals => {:include => :user}}])
+    # render json: @orders, include: [:user, :meals]
   end
 
   def create
     @order = Order.new(order_params)
     @order.user_id = current_user.id
     if @order.save
-      render json: @order, include: [:user]
+      render json: @order, include: [:user, :meals]
     else
       render json: { "error": @order.errors.full_messages[0] }, status: 400
     end

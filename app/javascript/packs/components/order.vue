@@ -13,8 +13,16 @@
     </div>
     <div v-bind:id="'collapse'+orderId" class="panel-collapse collapse" role="tabpanel" v-bind:aria-labelledby="'heading'+orderId">
       <div class="panel-body">
-        <ul>
-          <li v-for="meal in order.meals">{{meal.name}} - {{meal.price}}</li>
+        <ul class="media-list">
+          <li v-for="meal in order.meals" class="media">
+            <div class="media-left">
+              <img class="media-object" v-bind:src="meal.user.image_url">
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">{{meal.name}}</h4>
+              price: {{meal.price}}
+            </div>
+          </li>
         </ul>
         <meal-form :order="order"></meal-form>
       </div>
