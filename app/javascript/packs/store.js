@@ -11,6 +11,9 @@ let search = (arry, id) => {
     if (arry[i].id === id) { return i }
   }
 }
+let notif = (err) => {
+  return { notif: { message: err, time: Date.now()}}
+}
 
 Vue.use(Vuex)
 
@@ -42,27 +45,21 @@ const store = new Vuex.Store({
       axios.post('/orders', {order: payload}).then((response) => {
         commit('ADD_ORDER', { order: response.data })
       }, (err) => {
-        commit('SET_NOTIF', { notif: {
-          message: err.response.data.error,
-          time: Date.now()}
-        })
+        commit('SET_NOTIF', notif(err.response.data.error))
       })
     },
     ADD_NEW_MEAL: ({ commit }, payload) => {
       axios.post('/orders/'+payload.id+'/meals', {meal: payload}).then((response) => {
         commit('ADD_MEAL', { meal: response.data })
       }, (err) => {
-        commit('SET_NOTIF', { notif: {
-          message: err.response.data.error,
-          time: Date.now()}
-        })
+        commit('SET_NOTIF', notif(err.response.data.error))
       })
     },
     DELETE_MEAL: ({ commit }, payload) => {
       axios.delete('/orders/' + payload.order_id + '/meals/' + payload.meal_id).then((response) => {
         commit('REMOVE_MEAL', { meal: response.data })
       }, (err) => {
-        console.log(err)
+        commit('SET_NOTIF', notif(err.response.data.error))
       })
     },
   },

@@ -1,6 +1,7 @@
 class MealsController < ApplicationController
 
   before_action :authenticate, only: [:create]
+  before_action :check_owner, only: [:destroy]
 
   def create
     @order = Order.find(params[:order_id])
@@ -14,7 +15,6 @@ class MealsController < ApplicationController
   end
 
   def destroy
-    @meal = Meal.find(params[:id])
     if @meal.delete
       render :json => @meal
     end
@@ -26,4 +26,10 @@ class MealsController < ApplicationController
     params.require(:meal).permit(:name, :price)
   end
 
+  def check_owner
+    @meal = Meal.find(params[:id])
+    unless @meal.user_id == current_user.id
+      render json: { "error": "This is not your meal" }, status: 401
+    end
+  end
 end
