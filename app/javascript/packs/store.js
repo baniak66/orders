@@ -6,6 +6,12 @@ let token = document.getElementsByName('csrf-token')[0].getAttribute('content')
 axios.defaults.headers.common['X-CSRF-Token'] = token
 axios.defaults.headers.common['Accept'] = 'application/json'
 
+let search = (arry, id) => {
+  for (var i=0; i < arry.length; i++) {
+    if (arry[i].id === id) { return i }
+  }
+}
+
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -52,6 +58,13 @@ const store = new Vuex.Store({
         })
       })
     },
+    DELETE_MEAL: ({ commit }, payload) => {
+      axios.delete('/orders/' + payload.order_id + '/meals/' + payload.meal_id).then((response) => {
+        commit('REMOVE_MEAL', { meal: response.data })
+      }, (err) => {
+        console.log(err)
+      })
+    },
   },
   mutations: {
     SET_USER: (state, { user }) => {
@@ -69,6 +82,10 @@ const store = new Vuex.Store({
     ADD_MEAL: (state, { meal }) => {
       let meals = state.orders.filter((ord) => { return ord.id == meal.order_id})
       meals[0].meals.push(meal)
+    },
+    REMOVE_MEAL: (state, { meal }) => {
+      let order_meals = state.orders.filter((ord) => { return ord.id == meal.order_id})[0]
+      order_meals.meals.splice(search(order_meals.meals, meal.id),1);
     },
     SET_NOTIF: (state, { notif }) => {
       state.notif = notif

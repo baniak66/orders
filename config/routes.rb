@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   get '/user', to: 'users#status'
   resources :orders, only: [:index, :create] do
-    resources :meals, only: [:create]
+    resources :meals, only: [:create, :destroy]
   end
 end

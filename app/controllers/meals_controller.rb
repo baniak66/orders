@@ -13,6 +13,13 @@ class MealsController < ApplicationController
     end
   end
 
+  def destroy
+    @meal = Meal.find(params[:id])
+    if @meal.delete
+      render :json => @meal
+    end
+  end
+
   private
 
   def meal_params
