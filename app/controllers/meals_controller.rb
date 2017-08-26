@@ -1,5 +1,7 @@
 class MealsController < ApplicationController
 
+  before_action :authenticate, only: [:create]
+
   def create
     @order = Order.find(params[:order_id])
     @meal = @order.meals.new(meal_params)

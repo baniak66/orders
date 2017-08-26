@@ -23,10 +23,4 @@ class OrdersController < ApplicationController
     params.require(:order).permit(:restaurant)
   end
 
-  def authenticate
-    unless current_user
-      render json: { "error": "Please login..." }, status: 401
-    end
-  end
-
 end
