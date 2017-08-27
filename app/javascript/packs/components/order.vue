@@ -19,15 +19,16 @@
         </ul>
         <meal-form :order="order"></meal-form>
       </div>
-    <div class="panel-footer">
-      <small><em>Created {{order.created_at}} by: {{order.user.name}}</em></small>
-      <button v-on:click="deleteOrder(order)" class="btn btn-danger btn-sm">Delete order</button>
-    </div>
+      <div class="panel-footer">
+        <small><em>Created {{order.created_at}} by: {{order.user.name}}</em></small>
+        <button v-if="order.user_id == user.id" v-on:click="deleteOrder(order)" class="btn btn-danger btn-sm">Delete order</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import MealForm from './meal-form'
   import Meal from './meal'
 
@@ -38,6 +39,9 @@
       MealForm, Meal
     },
     computed: {
+      ...mapGetters({
+        user: 'current_user'
+      }),
       orderId: function () {
         return this.order.id
       },
@@ -59,3 +63,4 @@
     }
   }
 </script>
+

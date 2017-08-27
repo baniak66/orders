@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
 
   before_action :authenticate, only: [:create, :destroy]
+  before_action :check_order_author, only: :destroy
   before_action :check_meals_presence, only: :destroy
 
   def index
@@ -35,6 +36,13 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     if @order.meals.exists?
       render json: { "error": "You can't delete order with meals" }, status: 403
+    end
+  end
+
+  def check_order_author
+    @order = Order.find(params[:id])
+    unless @order.user_id == current_user.id
+      render json: { "error": "This is not your order" }, status: 401
     end
   end
 
