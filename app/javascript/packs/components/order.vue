@@ -21,6 +21,7 @@
       </div>
     <div class="panel-footer">
       <small><em>Created {{order.created_at}} by: {{order.user.name}}</em></small>
+      <button v-on:click="deleteOrder(order)" class="btn btn-danger btn-sm">Delete order</button>
     </div>
     </div>
   </div>
@@ -51,5 +52,10 @@
         return sum.toFixed(2)
       }
     },
+    methods: {
+      deleteOrder: function (order) {
+        this.$store.dispatch('DELETE_ORDER', order.id)
+      }
+    }
   }
 </script>

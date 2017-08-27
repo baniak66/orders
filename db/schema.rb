@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170824235841) do
+ActiveRecord::Schema.define(version: 20170827184437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20170824235841) do
     t.index ["uid"], name: "index_users_on_uid"
   end
 
-  add_foreign_key "meals", "orders"
+  add_foreign_key "meals", "orders", on_delete: :cascade
   add_foreign_key "meals", "users"
   add_foreign_key "orders", "users"
 end
