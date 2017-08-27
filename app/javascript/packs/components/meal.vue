@@ -10,7 +10,7 @@
           <span class="glyphicon glyphicon-remove"></span>
         </button>
       </h4>
-      price: {{meal.price}}
+      price: {{priceFormated}}
     </div>
   </li>
 </template>
@@ -32,7 +32,10 @@
     computed: {
       ...mapGetters({
         user: 'current_user'
-      })
+      }),
+      priceFormated: function () {
+        return Number(this.meal.price).toFixed(2)
+      }
     }
   }
 </script>
