@@ -9,49 +9,26 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12">
-        <h3>Add new order</h3>
-        <form v-on:submit="addOrder" class="form-inline">
-          <div class="form-group">
-
-            <input type="text" v-model="newOrder.restaurant" placeholder="Restaurant name" class="form-control"><br/>
-          </div>
-          <button type="submit" value="Submit" class="btn btn-info">Create</button>
-        </form>
-        <hr>
-      </div>
+      <order-form></order-form>
     </div>
   </div>
 </template>
 
 <script>
   import Order from './order'
+  import OrderForm from './order-form'
   import { mapGetters } from 'vuex'
 
   export default {
     name: 'orders',
     components: {
-      Order
-    },
-    data () {
-      return {
-        newOrder: {
-          restaurant: ""
-        }
-      }
+      Order, OrderForm
     },
     computed: mapGetters([
       'orders', 'notif'
     ]),
     mounted: function () {
       this.$store.dispatch('LOAD_ORDER_LIST')
-    },
-    methods: {
-      addOrder: function (e) {
-        e.preventDefault()
-        this.$store.dispatch('ADD_NEW_ORDER', {restaurant: this.newOrder.restaurant})
-        this.newOrder.restaurant = ""
-      }
     },
     watch: {
       'notif': function () {
