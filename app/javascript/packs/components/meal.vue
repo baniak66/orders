@@ -6,7 +6,7 @@
     <div class="media-body">
       <h4 class="media-heading">
         {{meal.name}}
-        <button v-on:click="deleteMeal(meal)" class="btn btn-danger btn-sm">
+        <button v-if="meal.user_id == user.id" v-on:click="deleteMeal(meal)" class="btn btn-danger btn-sm">
           <span class="glyphicon glyphicon-remove"></span>
         </button>
       </h4>
@@ -16,6 +16,8 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
+
   export default {
     name: 'meal',
     props: ['meal'],
@@ -26,6 +28,11 @@
             meal_id: meal.id
         })
       },
+    },
+    computed: {
+      ...mapGetters({
+        user: 'current_user'
+      })
     }
   }
 </script>
