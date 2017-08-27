@@ -1,6 +1,6 @@
 class MealsController < ApplicationController
 
-  before_action :authenticate, only: :create
+  before_action :authenticate, only: [:create, :destroy]
   before_action :check_owner, only: :destroy
   before_action :check_meals, only: :create
 
