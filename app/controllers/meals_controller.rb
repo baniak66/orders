@@ -1,10 +1,10 @@
 class MealsController < ApplicationController
 
-  before_action :authenticate, only: [:create]
-  before_action :check_owner, only: [:destroy]
+  before_action :authenticate, only: :create
+  before_action :check_owner, only: :destroy
+  before_action :check_meals, only: :create
 
   def create
-    @order = Order.find(params[:order_id])
     @meal = @order.meals.new(meal_params)
     @meal.user_id = current_user.id
     if @meal.save
@@ -30,6 +30,13 @@ class MealsController < ApplicationController
     @meal = Meal.find(params[:id])
     unless @meal.user_id == current_user.id
       render json: { "error": "This is not your meal" }, status: 401
+    end
+  end
+
+  def check_meals
+    @order = Order.find(params[:order_id])
+    if @order.meals.exists?(user_id: current_user.id)
+      render json: { "error": "You can add only one meal" }, status: 403
     end
   end
 end
