@@ -7,6 +7,7 @@
             {{order.restaurant}}
             <span class="badge">{{mealNumber}}</span>
             <span class="label label-primary">{{order.status}}</span>
+            <div class="pull-right">Total value: {{sumPrices}}</div>
           </h4>
         </a>
       </h4>
@@ -15,15 +16,6 @@
       <div class="panel-body">
         <ul class="media-list">
           <meal v-for="meal in order.meals" :meal="meal" :key="meal.id"></meal>
-          <!-- <li v-for="meal in order.meals" class="media">
-            <div class="media-left">
-              <img class="media-object" v-bind:src="meal.user.image_url">
-            </div>
-            <div class="media-body">
-              <h4 class="media-heading">{{meal.name}}</h4>
-              price: {{meal.price}}
-            </div>
-          </li> -->
         </ul>
         <meal-form :order="order"></meal-form>
       </div>
@@ -50,6 +42,13 @@
       },
       mealNumber: function () {
         return this.order.meals.length
+      },
+      sumPrices: function () {
+        var sum = 0
+        for (var i = 0; i < this.order.meals.length; i++) {
+          sum += Number(this.order.meals[i].price);
+        }
+        return sum.toFixed(2)
       }
     },
   }
