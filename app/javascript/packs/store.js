@@ -59,7 +59,7 @@ const store = new Vuex.Store({
       axios.put('/orders/' + payload.id, { status: payload.status}).then((response) => {
         commit('UPDATE_ORDER', { order: response.data })
       }, (err) => {
-        console.log(err)
+        commit('SET_NOTIF', notif(err.response.data.error))
       })
     },
     ADD_NEW_MEAL: ({ commit }, payload) => {

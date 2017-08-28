@@ -1,8 +1,10 @@
 class OrdersController < ApplicationController
 
   before_action :authenticate, only: [:create, :destroy]
+  before_action :set_order, only: [:destroy, :update]
   before_action :check_order_author, only: :destroy
   before_action :check_meals_presence, only: :destroy
+  before_action :check_meals_absence, only: :update
 
   def index
     @orders = Order.all
@@ -20,14 +22,12 @@ class OrdersController < ApplicationController
   end
 
   def destroy
-    @order = Order.find(params[:id])
     if @order.delete
       render :json => @order
     end
   end
 
   def update
-    @order = Order.find(params[:id])
     if @order.update(order_params)
       render :json => @order
     end
@@ -40,17 +40,25 @@ class OrdersController < ApplicationController
   end
 
   def check_meals_presence
-    @order = Order.find(params[:id])
     if @order.meals.exists?
       render json: { "error": "You can't delete order with meals" }, status: 403
     end
   end
 
   def check_order_author
-    @order = Order.find(params[:id])
     unless @order.user_id == current_user.id
       render json: { "error": "This is not your order" }, status: 401
     end
+  end
+
+  def check_meals_absence
+    if @order.meals.empty?
+      render json: { "error": "You can't chenge status of empty order" }, status: 403
+    end
+  end
+
+  def set_order
+    @order = Order.find(params[:id])
   end
 
 end
