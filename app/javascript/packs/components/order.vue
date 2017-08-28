@@ -23,7 +23,9 @@
       <div class="panel-footer">
         <small><em>Created {{order.created_at}} by: {{order.user.name}}</em></small>
         <div v-if="order.user_id == user.id" class="pull-right">
-          <button v-on:click="changeStatus(order, 'finalized')" class="btn btn-success btn-sm">Finalize</button>
+          <button v-if="order.status == 'active'" v-on:click="changeStatus(order, 'finalized')" class="btn btn-success btn-sm">Finalize</button>
+          <button v-else-if="order.status == 'finalized'" v-on:click="changeStatus(order, 'ordered')" class="btn btn-success btn-sm">Ordered</button>
+          <button v-else-if="order.status == 'ordered'" v-on:click="changeStatus(order, 'delivered')" class="btn btn-success btn-sm">Delivered</button>
           <button v-on:click="deleteOrder(order)" class="btn btn-danger btn-sm">Delete order</button>
         </div>
       </div>
