@@ -3,9 +3,10 @@
     <div class="row">
       <div class="col-md-12">
         <h3>Active orders</h3>
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div v-if="orders.length > 0" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
           <order v-for="order in orders" :order="order" :key="order.id"></order>
         </div>
+        <div v-else><h5>No active orders, start one...</h5></div>
       </div>
     </div>
     <div class="row">
@@ -14,9 +15,10 @@
     <div class="row">
       <div class="col-md-12">
         <h3>History</h3>
-        <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+        <div v-if="closedOrders.length > 0" class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
           <order v-for="order in closedOrders" :order="order" :key="order.id"></order>
         </div>
+        <div v-else><h4>History is empty</h4></div>
       </div>
     </div>
   </div>
