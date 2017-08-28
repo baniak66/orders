@@ -114,12 +114,14 @@ const store = new Vuex.Store({
       return state.user
     },
     orders: state => {
-      return state.orders
+      return state.orders.filter(order => order.status == "active" )
     },
     notif: state => {
       return state.notif
+    },
+    closedOrders: state => {
+      return state.orders.filter(order => order.status != "active" )
     }
-
   }
 })
 export default store

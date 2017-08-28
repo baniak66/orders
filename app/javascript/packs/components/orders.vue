@@ -11,6 +11,14 @@
     <div class="row">
       <order-form></order-form>
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>History</h3>
+        <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+          <order v-for="order in closedOrders" :order="order" :key="order.id"></order>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -25,7 +33,7 @@
       Order, OrderForm
     },
     computed: mapGetters([
-      'orders', 'notif'
+      'orders', 'notif', 'closedOrders'
     ]),
     mounted: function () {
       this.$store.dispatch('LOAD_ORDER_LIST')
