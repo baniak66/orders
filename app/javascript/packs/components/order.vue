@@ -18,11 +18,14 @@
           <meal v-for="meal in order.meals" :meal="meal" :key="meal.id"></meal>
         </ul>
         <div v-else class="panel-body">No meals added yet, add one if you want...</div>
-        <meal-form :order="order"></meal-form>
+        <meal-form v-if="order.status == 'active'" :order="order"></meal-form>
       </div>
       <div class="panel-footer">
         <small><em>Created {{order.created_at}} by: {{order.user.name}}</em></small>
-        <button v-if="order.user_id == user.id" v-on:click="deleteOrder(order)" class="btn btn-danger btn-sm">Delete order</button>
+        <div v-if="order.user_id == user.id" class="pull-right">
+          <button v-on:click="changeStatus(order, 'finalized')" class="btn btn-success btn-sm">Finalize</button>
+          <button v-on:click="deleteOrder(order)" class="btn btn-danger btn-sm">Delete order</button>
+        </div>
       </div>
     </div>
   </div>
@@ -60,6 +63,9 @@
     methods: {
       deleteOrder: function (order) {
         this.$store.dispatch('DELETE_ORDER', order.id)
+      },
+      changeStatus: function (order, status) {
+        this.$store.dispatch('CHANGE_STATUS', {id: order.id, status: status})
       }
     }
   }

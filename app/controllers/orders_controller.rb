@@ -26,10 +26,17 @@ class OrdersController < ApplicationController
     end
   end
 
+  def update
+    @order = Order.find(params[:id])
+    if @order.update(order_params)
+      render :json => @order
+    end
+  end
+
   private
 
   def order_params
-    params.require(:order).permit(:restaurant)
+    params.require(:order).permit(:restaurant, :status)
   end
 
   def check_meals_presence

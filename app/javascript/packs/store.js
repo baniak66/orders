@@ -55,6 +55,13 @@ const store = new Vuex.Store({
         commit('SET_NOTIF', notif(err.response.data.error))
       })
     },
+    CHANGE_STATUS: ({commit}, payload) => {
+      axios.put('/orders/' + payload.id, { status: payload.status}).then((response) => {
+        commit('UPDATE_ORDER', { order: response.data })
+      }, (err) => {
+        console.log(err)
+      })
+    },
     ADD_NEW_MEAL: ({ commit }, payload) => {
       axios.post('/orders/'+payload.id+'/meals', {meal: payload}).then((response) => {
         commit('ADD_MEAL', { meal: response.data })
@@ -85,6 +92,10 @@ const store = new Vuex.Store({
     },
     REMOVE_ORDER: (state, { order }) => {
       state.orders.splice(search(state.orders, order.id),1);
+    },
+    UPDATE_ORDER: (state, { order }) => {
+      let updated = state.orders.filter((ord) => { return ord.id == order.id})[0]
+      updated.status = order.status
     },
     ADD_MEAL: (state, { meal }) => {
       let meals = state.orders.filter((ord) => { return ord.id == meal.order_id})
