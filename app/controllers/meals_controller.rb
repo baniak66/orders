@@ -1,8 +1,10 @@
 class MealsController < ApplicationController
 
   before_action :authenticate, only: [:create, :destroy]
+  before_action :set_order, only: [:create, :destroy]
   before_action :check_owner, only: :destroy
   before_action :check_meals, only: :create
+  before_action :check_order_status, only: [:create, :destroy]
 
   def create
     @meal = @order.meals.new(meal_params)
@@ -34,9 +36,18 @@ class MealsController < ApplicationController
   end
 
   def check_meals
-    @order = Order.find(params[:order_id])
     if @order.meals.exists?(user_id: current_user.id)
       render json: { "error": "You can add only one meal" }, status: 403
     end
+  end
+
+  def check_order_status
+    unless @order.status == "active"
+      render json: { "error": "Order is closed" }, status: 403
+    end
+  end
+
+  def set_order
+    @order = Order.find(params[:order_id])
   end
 end

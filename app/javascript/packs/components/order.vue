@@ -15,7 +15,7 @@
     <div v-bind:id="'collapse'+orderId" class="panel-collapse collapse" role="tabpanel" v-bind:aria-labelledby="'heading'+orderId">
       <div class="panel-body">
         <ul v-if="order.meals.length > 0" class="media-list">
-          <meal v-for="meal in order.meals" :meal="meal" :key="meal.id"></meal>
+          <meal v-for="meal in order.meals" :meal="meal" :orderStatus="order.status" :key="meal.id"></meal>
         </ul>
         <div v-else class="panel-body">No meals added yet, add one if you want...</div>
         <meal-form v-if="order.status == 'active'" :order="order"></meal-form>
