@@ -1,5 +1,5 @@
 <template>
-  <div class="panel panel-default">
+  <div class="panel" v-bind:class="panelStyle">
     <div class="panel-heading" role="tab" v-bind:id="'heading'+orderId">
       <h4 class="panel-title">
         <a role="button" data-toggle="collapse" data-parent="#accordion" v-bind:href="'#collapse'+orderId" aria-expanded="true" v-bind:aria-controls="'collapse'+orderId">
@@ -60,6 +60,13 @@
           sum += Number(this.order.meals[i].price);
         }
         return sum.toFixed(2)
+      },
+      panelStyle: function () {
+        if (this.order.status == 'active') {
+          return 'panel-success'
+        } else {
+          return 'panel-default'
+        }
       }
     },
     methods: {
