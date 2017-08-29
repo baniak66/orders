@@ -21,13 +21,16 @@
         <meal-form v-if="order.status == 'active'" :order="order"></meal-form>
       </div>
       <div class="panel-footer">
-        <small><em>Created {{order.created_at}} by: {{order.user.name}}</em></small>
+        <small><em>Created on {{formatDate(order.created_at)}} by: {{order.user.name}}</em></small>
         <div v-if="order.user_id == user.id" class="pull-right">
           <button v-if="order.status == 'active'" v-on:click="changeStatus(order, 'finalized')" class="btn btn-success btn-sm">Finalize</button>
           <button v-else-if="order.status == 'finalized'" v-on:click="changeStatus(order, 'ordered')" class="btn btn-success btn-sm">Ordered</button>
           <button v-else-if="order.status == 'ordered'" v-on:click="changeStatus(order, 'delivered')" class="btn btn-success btn-sm">Delivered</button>
-          <button v-on:click="deleteOrder(order)" class="btn btn-danger btn-sm">Delete order</button>
+          <button v-if="order.status == 'active'" v-on:click="deleteOrder(order)" class="btn btn-danger btn-sm">Delete order</button>
         </div>
+        <small v-if="order.status == 'delivered'" class="pull-right">
+          <em>Order delivered on {{formatDate(order.updated_at)}}</em>
+        </small>
       </div>
     </div>
   </div>
@@ -37,6 +40,7 @@
   import { mapGetters } from 'vuex'
   import MealForm from './meal-form'
   import Meal from './meal'
+  var dateFormat = require('dateformat');
 
   export default {
     name: 'order',
@@ -75,6 +79,9 @@
       },
       changeStatus: function (order, status) {
         this.$store.dispatch('CHANGE_STATUS', {id: order.id, status: status})
+      },
+      formatDate: function (type) {
+        return dateFormat(new Date(type), "dddd, mmmm dS, yyyy, h:MM:ss TT");
       }
     }
   }
