@@ -1,10 +1,10 @@
 class MealsController < ApplicationController
 
-  before_action :authenticate, only: [:create, :destroy]
-  before_action :set_order, only: [:create, :destroy]
+  before_action :authenticate
+  before_action :set_order
   before_action :check_owner, only: :destroy
   before_action :check_meals, only: :create
-  before_action :check_order_status, only: [:create, :destroy]
+  before_action :check_order_status
 
   def create
     @meal = @order.meals.new(meal_params)
@@ -18,7 +18,7 @@ class MealsController < ApplicationController
 
   def destroy
     if @meal.delete
-      render :json => @meal
+      render json: @meal
     end
   end
 

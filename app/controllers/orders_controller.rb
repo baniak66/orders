@@ -1,8 +1,8 @@
 class OrdersController < ApplicationController
 
-  before_action :authenticate, only: [:create, :destroy]
+  before_action :authenticate, except: :index
   before_action :set_order, only: [:destroy, :update]
-  before_action :check_order_author, only: :destroy
+  before_action :check_order_author, only: [:destroy, :update]
   before_action :check_meals_presence, only: :destroy
   before_action :check_meals_absence, only: :update
 
@@ -23,13 +23,13 @@ class OrdersController < ApplicationController
 
   def destroy
     if @order.delete
-      render :json => @order
+      render json: @order
     end
   end
 
   def update
     if @order.update(order_params)
-      render :json => @order
+      render json: @order
     end
   end
 
