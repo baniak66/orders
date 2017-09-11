@@ -10,7 +10,7 @@
 
 <script>
   import store from './store'
-  import Top from './components/top.vue.erb'
+  import Top from './components/top.vue'
   import Orders from './components/orders.vue'
 
   export default {

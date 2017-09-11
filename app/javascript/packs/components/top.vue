@@ -1,4 +1,3 @@
-<% helpers = ActionController::Base.helpers %>
 <template>
   <nav class="navbar navbar-default">
     <div class="container">
@@ -11,14 +10,10 @@
         <ul v-if="user.status != 'no user'" class="nav navbar-nav navbar-right">
           <li><a href="#">{{user.name}}</a></li>
           <li><img :src="imgUrl"></li>
-          <li>
-            <a href="" v-on:click="logout">
-              <%= helpers.link_to 'Logout', '/logout', method: :delete %>
-            </a>
-          </li>
+          <li><a href="/logout" v-on:click="logout" data-method="delete">Logout</a></li>
         </ul>
         <ul v-if="user.status == 'no user'" class="nav navbar-nav navbar-right">
-          <li><%= helpers.link_to 'Login with Facebook', '/auth/facebook' %></li>
+          <li><a href="/auth/facebook">Login with Facebook</a></li>
         </ul>
       </div>
     </div>
