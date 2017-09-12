@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
   before_action :check_meals_absence, only: :update
 
   def index
-    @orders = Order.all
+    @orders = Order.includes( :user, [meals: :user]).all
     render json: @orders.to_json(:include => [ :user, { :meals => {:include => :user}}])
   end
 
