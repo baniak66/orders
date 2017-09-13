@@ -1,8 +1,8 @@
 <template>
   <div class="panel" v-bind:class="panelStyle">
-    <div class="panel-heading" role="tab" v-bind:id="'heading'+orderId">
+    <div class="panel-heading" role="tab" v-bind:id="'heading'+order.id">
       <h4 class="panel-title">
-        <a role="button" data-toggle="collapse" data-parent="#accordion" v-bind:href="'#collapse'+orderId" aria-expanded="true" v-bind:aria-controls="'collapse'+orderId">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" v-bind:href="'#collapse'+order.id" aria-expanded="true" v-bind:aria-controls="'collapse'+order.id">
           <h4>
             {{order.restaurant}}
             <span class="badge">{{mealNumber}}</span>
@@ -12,7 +12,7 @@
         </a>
       </h4>
     </div>
-    <div v-bind:id="'collapse'+orderId" class="panel-collapse collapse" role="tabpanel" v-bind:aria-labelledby="'heading'+orderId">
+    <div v-bind:id="'collapse'+order.id" class="panel-collapse collapse" role="tabpanel" v-bind:aria-labelledby="'heading'+order.id">
       <div class="panel-body">
         <ul v-if="order.meals.length > 0" class="media-list">
           <meal v-for="meal in order.meals" :meal="meal" :orderStatus="order.status" :key="meal.id"></meal>
@@ -52,9 +52,6 @@
       ...mapGetters({
         user: 'current_user'
       }),
-      orderId: function () {
-        return this.order.id
-      },
       mealNumber: function () {
         return this.order.meals.length
       },

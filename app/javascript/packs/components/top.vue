@@ -9,7 +9,7 @@
       <div id="navbar">
         <ul v-if="user.status != 'no user'" class="nav navbar-nav navbar-right">
           <li><a href="#">{{user.name}}</a></li>
-          <li><img :src="imgUrl"></li>
+          <li><img v-bind:src="user.image_url"></li>
           <li><a href="/logout" v-on:click="logout" data-method="delete">Logout</a></li>
         </ul>
         <ul v-if="user.status == 'no user'" class="nav navbar-nav navbar-right">
@@ -25,19 +25,9 @@
 
   export default {
     name: 'top',
-    data () {
-      return {
-
-      }
-    },
-    computed: {
-      ...mapGetters({
-        user: 'current_user'
-      }),
-      imgUrl: function () {
-        return this.user.image_url
-      }
-    },
+    computed: mapGetters(
+      { user: 'current_user' }
+    ),
     mounted: function () {
       this.$store.dispatch('CHECK_USER')
     },

@@ -1,7 +1,7 @@
 <template>
   <li class="media">
     <div class="media-left">
-      <a v-bind:href="profileUrl" target="_blank">
+      <a v-bind:href="meal.user.url" target="_blank">
         <img class="media-object" v-bind:src="meal.user.image_url">
       </a>
     </div>
@@ -37,9 +37,6 @@
       }),
       priceFormated: function () {
         return Number(this.meal.price).toFixed(2)
-      },
-      profileUrl: function () {
-        return this.meal.user.url
       }
     }
   }
